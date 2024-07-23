@@ -1,18 +1,28 @@
-import { IGameStore } from "../game.types";
+import { IGameStore } from '../game.types';
 
-export function playCardAction(
-  state: IGameStore,
-  cardId: number,
-): Partial<IGameStore> {
-  const isPlayerTurn = state.currentTurn === "player";
-  const currentPlayer = isPlayerTurn ? state.player : state.opponent;
+export function playCardAction(state: IGameStore, cardId: string) {
+	const isPlayerTurn = state.currentTurn === 'player';
+	const currentPlayer = isPlayerTurn ? state.player : state.opponent;
 
-  const currentCard = currentPlayer.deck.find((card) => card.id === cardId);
+	const currentCardIndex = currentPlayer.deck.findIndex(
+		(card) => card.id === cardId
+	);
 
-  if (currentCard && currentCard && currentPlayer.mana >= currentCard.mana) {
-    currentCard.isOnBoard = true;
-    currentPlayer.mana -= currentCard.mana;
-  }
+	const currentCard = currentPlayer.deck[currentCardIndex];
 
-  return isPlayerTurn ? { player: currentPlayer } : { opponent: currentPlayer };
+	if (currentCard && currentCard && currentPlayer.mana >= currentCard?.mana) {
+		currentCard.isOnBoard = true;
+		currentCard.isPlayedThisTurn = true;
+		currentCard.isOnHand = false;
+
+		currentPlayer.mana -= currentCard.mana;
+
+		currentPlayer.deck.splice(currentCardIndex, 1);
+		currentPlayer.deck.push(currentCard);
+	}
+
+	return {
+		player: isPlayerTurn ? currentPlayer : state.player,
+		opponent: isPlayerTurn ? state.opponent : currentPlayer,
+	};
 }

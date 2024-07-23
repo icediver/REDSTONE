@@ -29,7 +29,7 @@
 	}
 
 	&.disabled {
-		@apply grayscale cursor-not-allowed;
+		@apply bg-gradient-to-t from-gray-700 to-gray-600 text-gray-800 cursor-not-allowed;
 		box-shadow: none;
 	}
 

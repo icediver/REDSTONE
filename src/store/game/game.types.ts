@@ -1,28 +1,36 @@
-import { ICard } from "@/types/card.types";
+import { ICard } from '@/types/card.types';
 
-export type PlayerType = "player" | "opponent";
+export type PlayerType = 'player' | 'opponent';
 
 export interface IGameCard extends ICard {
-  id: number;
-  isOnBoard: boolean;
-  isCanAttack: boolean;
+	id: string;
+	isTaken: boolean;
+	isOnHand: boolean;
+	isOnBoard: boolean;
+	isCanAttack: boolean;
+	isPlayedThisTurn: boolean;
 }
 
 export interface IHero {
-  deck: IGameCard[];
-  health: number;
-  mana: number;
+	health: number;
+	mana: number;
+	deck: IGameCard[];
 }
 
-export interface IGameStore {
-  isGameStarted: boolean;
-  player: IHero;
-  opponent: IHero;
-  currentTurn: PlayerType;
-  isGameOver: boolean;
-  startGame: () => void;
-  endTurn: () => void;
-  playCard: (cardId: number) => void;
-  attackCard: (attackerId: number, targetId: number) => void;
-  attackHero: (attackerId: number) => void;
+export interface IGameFnStore {
+	startGame: () => void;
+	endTurn: () => void;
+	playCard: (cardId: string) => void;
+	returnCard: (cardId: string) => void;
+	attackCard: (attackerId: string, targetId: string) => void;
+	attackHero: (attackerId: string) => void;
+}
+
+export interface IGameStore extends IGameFnStore {
+	player: IHero;
+	opponent: IHero;
+	currentTurn: PlayerType;
+	isGameOver: boolean;
+	isGameStarted: boolean;
+	turn: number;
 }

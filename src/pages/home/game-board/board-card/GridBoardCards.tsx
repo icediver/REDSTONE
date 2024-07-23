@@ -1,19 +1,20 @@
-import { IGameCard } from "@/store/game/game.types";
-import { BoardCard } from "./BoardCard";
+import { IGameCard } from '@/store/game/game.types';
+import { BoardCard } from './BoardCard';
 
 export function GridBoardCards({
-  deck,
+	deck,
+	isPlayerSide,
 }: {
-  deck: IGameCard[];
-  isPlayer?: boolean;
+	deck: IGameCard[];
+	isPlayerSide: boolean;
 }) {
-  return (
-    <div className="h-56 py-7 px-20 flex items-center justify-center gap-1">
-      {deck
-        .filter((card) => card.isOnBoard)
-        .map((card) => (
-          <BoardCard key={card.id} card={card} />
-        ))}
-    </div>
-  );
+	return (
+		<div className="flex h-56 items-center justify-center gap-2 px-20">
+			{deck
+				.filter((card) => card.isOnBoard)
+				.map((card) => (
+					<BoardCard key={card.id} card={card} isPlayerSide={isPlayerSide} />
+				))}
+		</div>
+	);
 }
