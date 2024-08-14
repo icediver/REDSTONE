@@ -2,7 +2,6 @@ import { MAX_MANA } from '@/constants/game/core.constants';
 import { IGameCard, IGameStore, PlayerType } from '../game.types';
 import { drawCardsAction } from './draw-cards';
 import { useNotificationStore } from '@/store/notification/notification.store';
-import { randomOpponentPlay } from './opponent-core-game/random-opponent-play';
 
 function getNewMana(currentTurn: number) {
 	return Math.min(currentTurn, MAX_MANA);
